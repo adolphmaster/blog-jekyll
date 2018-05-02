@@ -1,0 +1,895 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+
+
+
+
+
+
+# API(Application Programming Interface)
+
+
+> ##应用程序编程接口
+
+# Object类
+	类 Object 是类层次结构的根类。每个类都使用 Object 作为超类。
+	 每个类都直接或者间接的继承自Object类。
+	
+	  Object类的方法：
+	  		public int hashCode():返回该对象的哈希码值。
+	  			注意：哈希值是根据哈希算法计算出来的一个值，这个值和地址值有关，但是不是实际地址值。
+	 			           你可以理解为地址值。
+	
+	 		public final Class getClass():返回此 Object 的运行时类
+	 			Class类的方法：
+	 				public String getName()：以 String 的形式返回此 Class 对象所表示的实体
+			public String toString():返回该对象的字符串表示
+	
+			toString()方法的值等价于
+				getClass().getName() + '@' + Integer.toHexString(hashCode())
+				this.getClass().getName()+'@'+Integer.toHexString(this.hashCode())
+	  Integer类下的一个静态方法：
+  	    	public static String toHexString(int i)：把一个整数转成一个十六进制表示的字符串
+
+				记住一个格式：对象名 instanceof 类名,obj instanceof Student
+							表示：判断该对象名是否是该类名一个对象
+	
+		public boolean equals(Object obj):指示其他某个对象是否与此对象“相等”。
+		==:
+		  		基本类型：比较的就是值是否相同
+		 	    引用类型：比较的就是地址值是否相同
+		equals:
+		  		引用类型：默认情况下，比较的是地址值。
+		  		不过，我们可以根据情况自己重写该方法。一般重写都是自动生成，比较对象的成员变量值是否相同
+
+
+		protected void finalize()：当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。
+								   用于垃圾回收，但是什么时候回收不确定。
+		protected Object clone():创建并返回此对象的一个副本。
+		 		                A:重写该方法
+	
+		  Cloneable:此类实现了 Cloneable 接口，以指示 Object.clone() 方法可以合法地对该类实例进行按字段复制。
+		   	这个接口是标记接口，告诉我们实现该接口的类就可以实现对象的复制了。
+#包装类、Integer类
+		为了对基本数据类型进行更多的操作，更方便的操作，Java就针对每一种基本数据类型提供了
+	对应的类类型。包装类类型。
+			  byte 			Byte
+			  short			Short
+			  int				Integer
+			  long				Long
+			  float			Float
+			  double			Double
+			  char				Character
+			  boolean			Boolean
+	
+	  用于基本数据类型与字符串之间的转换。
+
+
+		Integer的构造方法：
+		  public Integer(int value)
+		  public Integer(String s)
+			注意：这个字符串必须是由数字字符组成
+	
+		除了Boolean类和Character类以外，其它的包装类都有静态的parseXxx方法（Xxx指代具体
+								的数据类型），用于将字符串转换成相对应的原始数据类型值。
+
+
+		int类型和String类型的相互转换
+			  int -- String
+			  		String.valueOf(number)
+	
+						// int -- String
+						int number = 100;
+						// 方式1
+						String s1 = "" + number;
+						System.out.println("s1:" + s1);
+						// 方式2
+						String s2 = String.valueOf(number);
+						System.out.println("s2:" + s2);
+						// 方式3
+						// int -- Integer -- String
+						Integer i = new Integer(number);
+						String s3 = i.toString();
+						System.out.println("s3:" + s3);
+						// 方式4
+						// public static String toString(int i)
+						String s4 = Integer.toString(number);
+						System.out.println("s4:" + s4);
+
+
+			   String -- int
+			  		Integer.parseInt(s)
+
+
+						// String -- int
+						String s = "100";
+						// 方式1
+						// String -- Integer -- int
+						Integer ii = new Integer(s);
+						// public int intValue()
+						int x = ii.intValue();
+						System.out.println("x:" + x);
+						//方式2
+						//public static int parseInt(String s)
+						int y = Integer.parseInt(s);
+						System.out.println("y:"+y);
+
+
+		常用的基本进制转换
+		  public static String toBinaryString(int i)
+		  public static String toOctalString(int i)
+		  public static String toHexString(int i)
+	
+		  十进制到其他进制
+		  public static String toString(int i,int radix)//Integer.toString(100, 7)
+		  由这个我们也看到了进制的范围：2-36
+		  为什么呢?0,...9,a...z
+	
+		  其他进制到十进制
+		  public static int parseInt(String s,int radix)//Integer.parseInt("100", 6)
+	
+		JDK5的新特性
+		  自动装箱：把基本类型转换为包装类类型
+		  自动拆箱：把包装类类型转换为基本类型
+
+
+			    Integer  ii = 100;
+				ii += 200;
+				System.out.println("ii:" + ii);
+	
+				// 通过反编译后的代码
+				// Integer ii = Integer.valueOf(100); //自动装箱
+				// ii = Integer.valueOf(ii.intValue() + 200); //自动拆箱，再自动装箱
+				// System.out.println((new StringBuilder("ii:")).append(ii).toString());
+
+
+		 注意一个小问题：
+		  		在使用时，Integer  x = null;代码就会出现NullPointerException。
+		  		建议先判断是否为null，然后再使用。
+	
+				Integer iii = null;
+				// NullPointerException
+				if (iii != null) {
+					iii += 1000;
+					System.out.println(iii);
+				}
+
+#BigInteger类
+	BigInteger:可以让超过Integer范围内的数据进行运算
+		构造方法：
+		 	 BigInteger(String val)
+		方法：
+			 public BigInteger add(BigInteger val):加 --->bi1.add(bi2)
+			 public BigInteger subtract(BigInteger val):减
+			 public BigInteger multiply(BigInteger val):乘
+			 public BigInteger divide(BigInteger val):除
+			 public BigInteger[] divideAndRemainder(BigInteger val):返回商和余数的数组
+#BigDecimal
+        由于在运算的时候，float类型和double很容易丢失精度，演示案例。所以，为了能精确
+    的表示、计算浮点数，Java提供了BigDecimal
+        BigDecimal类：不可变的、任意精度的有符号十进制数,可以解决数据丢失问题。
+    
+    构造方法：
+      		public BigDecimal(String val)
+    
+      public BigDecimal add(BigDecimal augend)
+      public BigDecimal subtract(BigDecimal subtrahend)
+      public BigDecimal multiply(BigDecimal multiplicand)
+      public BigDecimal divide(BigDecimal divisor)
+      public BigDecimal divide(BigDecimal divisor,int scale,int roundingMode):商，几位小数，如何舍取
+#String类
+	字符串：就是由多个字符组成的一串数据。也可以看成是一个字符数组。
+	 	 通过查看API，我们可以知道
+	  		A:字符串字面值"abc"也可以看成是一个字符串对象。
+	  		B:字符串是常量，一旦被赋值，就不能被改变。
+	
+		字符串的特点：一旦被赋值，就不能改变。
+			面试题：	public class StringDemo {
+					public static void main(String[] args) {
+						String s = "hello";
+						s += "world";
+						System.out.println("s:" + s); // helloworld
+![](http://i.imgur.com/CDj7KiN.png)
+
+		面试题： String s = new String(“hello”)和String s = “hello”;的区别?
+		        有。前者会创建2个对象，后者创建1个对象。
+   ![](http://i.imgur.com/oTuHPy6.png)
+
+
+		  ==:比较引用类型比较的是地址值是否相同
+		  equals:比较引用类型默认也是比较地址值是否相同，而String类重写了equals()方法，比较的是内容是否相同
+	
+		面试题：
+		  字符串如果是变量相加，先开空间，在拼接。
+		  字符串如果是常量相加，是先加，然后在常量池找，如果有就直接返回，否则，就创建。
+	
+				String s1 = "hello";
+				String s2 = "world";
+				String s3 = "helloworld";
+				System.out.println(s3 == s1 + s2);// false
+				System.out.println(s3.equals((s1 + s2)));// true
+	
+				System.out.println(s3 == "hello" + "world");// false 这个我们错了，应该是true
+				System.out.println(s3.equals("hello" + "world"));// true
+
+
+
+		  构造方法：
+		  		public String():空构造
+		 		public String(byte[] bytes):把字节数组转成字符串
+		 		public String(byte[] bytes,int index,int length):把字节数组的一部分转成字符串；
+								注意：length是长度
+		 		public String(char[] value):把字符数组转成字符串
+		 		public String(char[] value,int index,int count):把字符数组的一部分转成字符串；
+								注意：count是数量；
+		 		public String(String original):把字符串常量值转成字符串
+	
+		  字符串的方法：
+		  		public int length()：返回此字符串的长度。
+
+
+	  String类的判断功能：
+		 1. boolean equals(Object obj):比较字符串的内容是否相同,区分大小写
+		 2. boolean equalsIgnoreCase(String str):比较字符串的内容是否相同,忽略大小写
+		 3. boolean contains(String str):判断大字符串中是否包含小字符串
+		 4. boolean startsWith(String str):判断字符串是否以某个指定的字符串开头
+		 5. boolean endsWith(String str):判断字符串是否以某个指定的字符串结尾
+		 6. boolean isEmpty():判断字符串是否为空。
+	
+		  注意：
+		  		字符串内容为空和字符串对象为空。
+		 		String s = "";
+		  		String s = null;
+	
+	  String类的获取功能
+		 1. int length():获取字符串的长度。
+		 2. char charAt(int index):获取指定索引位置的字符
+		 3. int indexOf(int ch):返回指定字符在此字符串中第一次出现处的索引。
+		  		为什么这里是int类型，而不是char类型?
+		  		原因是：'a'和97其实都可以代表'a'
+		 4. int indexOf(String str):返回指定字符串在此字符串中第一次出现处的索引。
+		 5. int indexOf(int ch,int fromIndex):返回指定字符在此字符串中从指定位置后第一次出现处的索引。
+		 6. int indexOf(String str,int fromIndex):返回指定字符串在此字符串中从指定位置后第一次出现处的索引。
+		 7. String substring(int start):从指定位置开始截取字符串,默认到末尾。
+		 8. String substring(int start,int end):从指定位置开始到指定位置结束截取字符串。
+	
+	   String的转换功能：
+		  1. byte[] getBytes():把字符串转换为字节数组。
+		  2.  char[] toCharArray():把字符串转换为字符数组。
+		  3. static String valueOf(char[] chs):把字符数组转成字符串。
+		  4.  static String valueOf(int i):把int类型的数据转成字符串。
+		  		注意：String类的valueOf方法可以把任意类型的数据转成字符串。
+		  5. String toLowerCase():把字符串转成小写。
+		  6. String toUpperCase():把字符串转成大写。
+		  7. String concat(String str):把字符串拼接。
+
+  		String类的其他功能：
+
+		  替换功能：
+			  String replace(char old,char new)
+			  String replace(String old,String new)
+	
+		  去除字符串两空格
+		  	  String trim()
+	
+		  按字典顺序比较两个字符串
+			 int compareTo(String str)
+			 int compareToIgnoreCase(String str)
+
+# Math类
+	Math:用于数学运算的类。
+		  成员变量：
+		  		public static final double PI
+		  		public static final double E
+		  成员方法：
+		  		public static int abs(int a)：绝对值
+		 		public static double ceil(double a):向上取整
+		 		public static double floor(double a):向下取整
+		 		public static int max(int a,int b):最大值 (min自学)
+		 		public static double pow(double a,double b):a的b次幂
+		 		public static double random():随机数 [0.0,1.0)
+		 		public static int round(float a) 四舍五入(参数为double的自学)
+		 		public static double sqrt(double a):正平方根
+	
+	面试题：需求：请设计一个方法，可以实现获取任意范围内的随机数。
+		 int number = (int) (Math.random() * (end - start + 1)) + start;
+# Random类
+	Random:产生随机数的类
+
+	  构造方法：
+	  		public Random():没有给种子，用的是默认种子，是当前时间的毫秒值
+	 		public Random(long seed):给出指定的种子
+	
+	 		给定种子后，每次得到的随机数是相同的。
+	
+	  成员方法：
+	  		public int nextInt()：返回的是int范围内的随机数
+	 		public int nextInt(int n):返回的是[0,n)范围的内随机数
+#System类
+	System类包含一些有用的类字段和方法。它不能被实例化。
+
+	  方法：
+	  		public static void gc()：运行垃圾回收器。
+	 		public static void exit(int status):终止当前正在运行的 Java 虚拟机。
+									参数用作状态码；根据惯例，非 0 的状态码表示异常终止。
+	 		public static long currentTimeMillis():返回以毫秒为单位的当前时间
+	 		public static void arraycopy(Object src,int srcPos,Object dest,int destPos,int length)
+	 				从指定源数组中复制一个数组，复制从指定的位置开始，到目标数组的指定位置结束。
+	
+		public class SystemDemo {
+			public static void main(String[] args) {
+				// 定义数组
+				int[] arr = { 11, 22, 33, 44, 55 };
+				int[] arr2 = { 6, 7, 8, 9, 10 };
+	
+				// 请大家看这个代码的意思
+				System.arraycopy(arr, 1, arr2, 2, 2);
+	
+				System.out.println(Arrays.toString(arr));//11,22,33,44,55
+				System.out.println(Arrays.toString(arr2));//6,7,22,33,10
+			}
+		}
+
+
+#Date类
+	Date:表示特定的瞬间，精确到毫秒。
+
+	  构造方法：
+	  		Date():根据当前的默认毫秒值创建日期对象
+	 		Date(long date)：根据给定的毫秒值创建日期对象
+	  		 public long getTime():获取时间，以毫秒为单位
+	  public void setTime(long time):设置时间
+	
+	  从Date得到一个毫秒值
+	  		getTime()
+	  把一个毫秒值转换为Date
+	  		构造方法
+	  		setTime(long time)
+
+#DateForamt类
+	   Date --	String(格式化)
+	  		public final String format(Date date)
+
+
+					Date d = new Date();
+					// 创建格式化对象
+					// SimpleDateFormat sdf = new SimpleDateFormat();
+					// 给定模式
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+					// public final String format(Date date)
+					String s = sdf.format(d);
+					System.out.println(s);
+
+
+	  String -- Date(解析)
+	  		public Date parse(String source)
+	
+				//String -- Date
+				String str = "2008-08-08 12:12:12";
+				//在把一个字符串解析为日期的时候，请注意格式必须和给定的字符串格式匹配
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date dd = sdf2.parse(str);
+				System.out.println(dd);
+	
+	  DateForamt:可以进行日期和字符串的格式化和解析，但是由于是抽象类，所以使用具体子
+				 类SimpleDateFormat。
+	
+	  SimpleDateFormat的构造方法：
+	  		SimpleDateFormat():默认模式
+	  		SimpleDateFormat(String pattern):给定的模式
+	  			这个模式字符串该如何写呢?
+	  			通过查看API，我们就找到了对应的模式
+	  			年 y
+	  			月 M
+	  			日 d
+	  			时 H
+	 			分 m
+	  			秒 s
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<h1 id="apiapplicationprogramminginterface">API(Application Programming Interface)</h1>
+
+<blockquote>
+  <h2 id="">应用程序编程接口</h2>
+</blockquote>
+
+<h1 id="object">Object类</h1>
+
+<pre><code>类 Object 是类层次结构的根类。每个类都使用 Object 作为超类。
+ 每个类都直接或者间接的继承自Object类。
+
+  Object类的方法：
+        public int hashCode():返回该对象的哈希码值。
+            注意：哈希值是根据哈希算法计算出来的一个值，这个值和地址值有关，但是不是实际地址值。
+                       你可以理解为地址值。
+
+        public final Class getClass():返回此 Object 的运行时类
+            Class类的方法：
+                public String getName()：以 String 的形式返回此 Class 对象所表示的实体
+        public String toString():返回该对象的字符串表示
+
+        toString()方法的值等价于
+            getClass().getName() + '@' + Integer.toHexString(hashCode())
+            this.getClass().getName()+'@'+Integer.toHexString(this.hashCode())
+  Integer类下的一个静态方法：
+          public static String toHexString(int i)：把一个整数转成一个十六进制表示的字符串
+
+            记住一个格式：对象名 instanceof 类名,obj instanceof Student
+                        表示：判断该对象名是否是该类名一个对象
+
+    public boolean equals(Object obj):指示其他某个对象是否与此对象“相等”。
+    ==:
+            基本类型：比较的就是值是否相同
+            引用类型：比较的就是地址值是否相同
+    equals:
+            引用类型：默认情况下，比较的是地址值。
+            不过，我们可以根据情况自己重写该方法。一般重写都是自动生成，比较对象的成员变量值是否相同
+
+
+    protected void finalize()：当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。
+                               用于垃圾回收，但是什么时候回收不确定。
+    protected Object clone():创建并返回此对象的一个副本。
+                            A:重写该方法
+
+      Cloneable:此类实现了 Cloneable 接口，以指示 Object.clone() 方法可以合法地对该类实例进行按字段复制。
+        这个接口是标记接口，告诉我们实现该接口的类就可以实现对象的复制了。
+</code></pre>
+
+<h1 id="integer">包装类、Integer类</h1>
+
+<pre><code>    为了对基本数据类型进行更多的操作，更方便的操作，Java就针对每一种基本数据类型提供了
+对应的类类型。包装类类型。
+          byte          Byte
+          short         Short
+          int               Integer
+          long              Long
+          float         Float
+          double            Double
+          char              Character
+          boolean           Boolean
+
+  用于基本数据类型与字符串之间的转换。
+
+
+    Integer的构造方法：
+      public Integer(int value)
+      public Integer(String s)
+        注意：这个字符串必须是由数字字符组成
+
+    除了Boolean类和Character类以外，其它的包装类都有静态的parseXxx方法（Xxx指代具体
+                            的数据类型），用于将字符串转换成相对应的原始数据类型值。
+
+
+    int类型和String类型的相互转换
+          int -- String
+                String.valueOf(number)
+
+                    // int -- String
+                    int number = 100;
+                    // 方式1
+                    String s1 = "" + number;
+                    System.out.println("s1:" + s1);
+                    // 方式2
+                    String s2 = String.valueOf(number);
+                    System.out.println("s2:" + s2);
+                    // 方式3
+                    // int -- Integer -- String
+                    Integer i = new Integer(number);
+                    String s3 = i.toString();
+                    System.out.println("s3:" + s3);
+                    // 方式4
+                    // public static String toString(int i)
+                    String s4 = Integer.toString(number);
+                    System.out.println("s4:" + s4);
+
+
+           String -- int
+                Integer.parseInt(s)
+
+
+                    // String -- int
+                    String s = "100";
+                    // 方式1
+                    // String -- Integer -- int
+                    Integer ii = new Integer(s);
+                    // public int intValue()
+                    int x = ii.intValue();
+                    System.out.println("x:" + x);
+                    //方式2
+                    //public static int parseInt(String s)
+                    int y = Integer.parseInt(s);
+                    System.out.println("y:"+y);
+
+
+    常用的基本进制转换
+      public static String toBinaryString(int i)
+      public static String toOctalString(int i)
+      public static String toHexString(int i)
+
+      十进制到其他进制
+      public static String toString(int i,int radix)//Integer.toString(100, 7)
+      由这个我们也看到了进制的范围：2-36
+      为什么呢?0,...9,a...z
+
+      其他进制到十进制
+      public static int parseInt(String s,int radix)//Integer.parseInt("100", 6)
+
+    JDK5的新特性
+      自动装箱：把基本类型转换为包装类类型
+      自动拆箱：把包装类类型转换为基本类型
+
+
+            Integer  ii = 100;
+            ii += 200;
+            System.out.println("ii:" + ii);
+
+            // 通过反编译后的代码
+            // Integer ii = Integer.valueOf(100); //自动装箱
+            // ii = Integer.valueOf(ii.intValue() + 200); //自动拆箱，再自动装箱
+            // System.out.println((new StringBuilder("ii:")).append(ii).toString());
+
+
+     注意一个小问题：
+            在使用时，Integer  x = null;代码就会出现NullPointerException。
+            建议先判断是否为null，然后再使用。
+
+            Integer iii = null;
+            // NullPointerException
+            if (iii != null) {
+                iii += 1000;
+                System.out.println(iii);
+            }
+</code></pre>
+
+<h1 id="biginteger">BigInteger类</h1>
+
+<pre><code>BigInteger:可以让超过Integer范围内的数据进行运算
+    构造方法：
+         BigInteger(String val)
+    方法：
+         public BigInteger add(BigInteger val):加 ---&gt;bi1.add(bi2)
+         public BigInteger subtract(BigInteger val):减
+         public BigInteger multiply(BigInteger val):乘
+         public BigInteger divide(BigInteger val):除
+         public BigInteger[] divideAndRemainder(BigInteger val):返回商和余数的数组
+</code></pre>
+
+<h1 id="bigdecimal">BigDecimal</h1>
+
+<pre><code>    由于在运算的时候，float类型和double很容易丢失精度，演示案例。所以，为了能精确
+的表示、计算浮点数，Java提供了BigDecimal
+    BigDecimal类：不可变的、任意精度的有符号十进制数,可以解决数据丢失问题。
+
+构造方法：
+          public BigDecimal(String val)
+
+  public BigDecimal add(BigDecimal augend)
+  public BigDecimal subtract(BigDecimal subtrahend)
+  public BigDecimal multiply(BigDecimal multiplicand)
+  public BigDecimal divide(BigDecimal divisor)
+  public BigDecimal divide(BigDecimal divisor,int scale,int roundingMode):商，几位小数，如何舍取
+</code></pre>
+
+<h1 id="string">String类</h1>
+
+<pre><code>字符串：就是由多个字符组成的一串数据。也可以看成是一个字符数组。
+     通过查看API，我们可以知道
+        A:字符串字面值"abc"也可以看成是一个字符串对象。
+        B:字符串是常量，一旦被赋值，就不能被改变。
+
+    字符串的特点：一旦被赋值，就不能改变。
+        面试题：    public class StringDemo {
+                public static void main(String[] args) {
+                    String s = "hello";
+                    s += "world";
+                    System.out.println("s:" + s); // helloworld
+</code></pre>
+
+<p><img src="http://i.imgur.com/CDj7KiN.png" alt="" title=""></p>
+
+<pre><code>    面试题： String s = new String(“hello”)和String s = “hello”;的区别?
+            有。前者会创建2个对象，后者创建1个对象。
+</code></pre>
+
+<p><img src="http://i.imgur.com/oTuHPy6.png" alt="" title=""></p>
+
+<pre><code>      ==:比较引用类型比较的是地址值是否相同
+      equals:比较引用类型默认也是比较地址值是否相同，而String类重写了equals()方法，比较的是内容是否相同
+
+    面试题：
+      字符串如果是变量相加，先开空间，在拼接。
+      字符串如果是常量相加，是先加，然后在常量池找，如果有就直接返回，否则，就创建。
+
+            String s1 = "hello";
+            String s2 = "world";
+            String s3 = "helloworld";
+            System.out.println(s3 == s1 + s2);// false
+            System.out.println(s3.equals((s1 + s2)));// true
+
+            System.out.println(s3 == "hello" + "world");// false 这个我们错了，应该是true
+            System.out.println(s3.equals("hello" + "world"));// true
+
+
+
+      构造方法：
+            public String():空构造
+            public String(byte[] bytes):把字节数组转成字符串
+            public String(byte[] bytes,int index,int length):把字节数组的一部分转成字符串；
+                            注意：length是长度
+            public String(char[] value):把字符数组转成字符串
+            public String(char[] value,int index,int count):把字符数组的一部分转成字符串；
+                            注意：count是数量；
+            public String(String original):把字符串常量值转成字符串
+
+      字符串的方法：
+            public int length()：返回此字符串的长度。
+
+
+  String类的判断功能：
+     1. boolean equals(Object obj):比较字符串的内容是否相同,区分大小写
+     2. boolean equalsIgnoreCase(String str):比较字符串的内容是否相同,忽略大小写
+     3. boolean contains(String str):判断大字符串中是否包含小字符串
+     4. boolean startsWith(String str):判断字符串是否以某个指定的字符串开头
+     5. boolean endsWith(String str):判断字符串是否以某个指定的字符串结尾
+     6. boolean isEmpty():判断字符串是否为空。
+
+      注意：
+            字符串内容为空和字符串对象为空。
+            String s = "";
+            String s = null;
+
+  String类的获取功能
+     1. int length():获取字符串的长度。
+     2. char charAt(int index):获取指定索引位置的字符
+     3. int indexOf(int ch):返回指定字符在此字符串中第一次出现处的索引。
+            为什么这里是int类型，而不是char类型?
+            原因是：'a'和97其实都可以代表'a'
+     4. int indexOf(String str):返回指定字符串在此字符串中第一次出现处的索引。
+     5. int indexOf(int ch,int fromIndex):返回指定字符在此字符串中从指定位置后第一次出现处的索引。
+     6. int indexOf(String str,int fromIndex):返回指定字符串在此字符串中从指定位置后第一次出现处的索引。
+     7. String substring(int start):从指定位置开始截取字符串,默认到末尾。
+     8. String substring(int start,int end):从指定位置开始到指定位置结束截取字符串。
+
+   String的转换功能：
+      1. byte[] getBytes():把字符串转换为字节数组。
+      2.  char[] toCharArray():把字符串转换为字符数组。
+      3. static String valueOf(char[] chs):把字符数组转成字符串。
+      4.  static String valueOf(int i):把int类型的数据转成字符串。
+            注意：String类的valueOf方法可以把任意类型的数据转成字符串。
+      5. String toLowerCase():把字符串转成小写。
+      6. String toUpperCase():把字符串转成大写。
+      7. String concat(String str):把字符串拼接。
+
+      String类的其他功能：
+
+      替换功能：
+          String replace(char old,char new)
+          String replace(String old,String new)
+
+      去除字符串两空格
+          String trim()
+
+      按字典顺序比较两个字符串
+         int compareTo(String str)
+         int compareToIgnoreCase(String str)
+</code></pre>
+
+<h1 id="math">Math类</h1>
+
+<pre><code>Math:用于数学运算的类。
+      成员变量：
+            public static final double PI
+            public static final double E
+      成员方法：
+            public static int abs(int a)：绝对值
+            public static double ceil(double a):向上取整
+            public static double floor(double a):向下取整
+            public static int max(int a,int b):最大值 (min自学)
+            public static double pow(double a,double b):a的b次幂
+            public static double random():随机数 [0.0,1.0)
+            public static int round(float a) 四舍五入(参数为double的自学)
+            public static double sqrt(double a):正平方根
+
+面试题：需求：请设计一个方法，可以实现获取任意范围内的随机数。
+     int number = (int) (Math.random() * (end - start + 1)) + start;
+</code></pre>
+
+<h1 id="random">Random类</h1>
+
+<pre><code>Random:产生随机数的类
+
+  构造方法：
+        public Random():没有给种子，用的是默认种子，是当前时间的毫秒值
+        public Random(long seed):给出指定的种子
+
+        给定种子后，每次得到的随机数是相同的。
+
+  成员方法：
+        public int nextInt()：返回的是int范围内的随机数
+        public int nextInt(int n):返回的是[0,n)范围的内随机数
+</code></pre>
+
+<h1 id="system">System类</h1>
+
+<pre><code>System类包含一些有用的类字段和方法。它不能被实例化。
+
+  方法：
+        public static void gc()：运行垃圾回收器。
+        public static void exit(int status):终止当前正在运行的 Java 虚拟机。
+                                参数用作状态码；根据惯例，非 0 的状态码表示异常终止。
+        public static long currentTimeMillis():返回以毫秒为单位的当前时间
+        public static void arraycopy(Object src,int srcPos,Object dest,int destPos,int length)
+                从指定源数组中复制一个数组，复制从指定的位置开始，到目标数组的指定位置结束。
+
+    public class SystemDemo {
+        public static void main(String[] args) {
+            // 定义数组
+            int[] arr = { 11, 22, 33, 44, 55 };
+            int[] arr2 = { 6, 7, 8, 9, 10 };
+
+            // 请大家看这个代码的意思
+            System.arraycopy(arr, 1, arr2, 2, 2);
+
+            System.out.println(Arrays.toString(arr));//11,22,33,44,55
+            System.out.println(Arrays.toString(arr2));//6,7,22,33,10
+        }
+    }
+</code></pre>
+
+<h1 id="date">Date类</h1>
+
+<pre><code>Date:表示特定的瞬间，精确到毫秒。
+
+  构造方法：
+        Date():根据当前的默认毫秒值创建日期对象
+        Date(long date)：根据给定的毫秒值创建日期对象
+         public long getTime():获取时间，以毫秒为单位
+  public void setTime(long time):设置时间
+
+  从Date得到一个毫秒值
+        getTime()
+  把一个毫秒值转换为Date
+        构造方法
+        setTime(long time)
+</code></pre>
+
+<h1 id="dateforamt">DateForamt类</h1>
+
+<pre><code>   Date --  String(格式化)
+        public final String format(Date date)
+
+
+                Date d = new Date();
+                // 创建格式化对象
+                // SimpleDateFormat sdf = new SimpleDateFormat();
+                // 给定模式
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                // public final String format(Date date)
+                String s = sdf.format(d);
+                System.out.println(s);
+
+
+  String -- Date(解析)
+        public Date parse(String source)
+
+            //String -- Date
+            String str = "2008-08-08 12:12:12";
+            //在把一个字符串解析为日期的时候，请注意格式必须和给定的字符串格式匹配
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dd = sdf2.parse(str);
+            System.out.println(dd);
+
+  DateForamt:可以进行日期和字符串的格式化和解析，但是由于是抽象类，所以使用具体子
+             类SimpleDateFormat。
+
+  SimpleDateFormat的构造方法：
+        SimpleDateFormat():默认模式
+        SimpleDateFormat(String pattern):给定的模式
+            这个模式字符串该如何写呢?
+            通过查看API，我们就找到了对应的模式
+            年 y
+            月 M
+            日 d
+            时 H
+            分 m
+            秒 s
+</code></pre>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "java/java-API.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
